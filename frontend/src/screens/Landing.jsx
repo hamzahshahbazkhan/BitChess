@@ -4,27 +4,47 @@ import { useSocket } from '../hooks/useSocket.js';
 import { SocketProvider, useSocketContext } from '../context/SocketContext'
 import { Navbar } from "../components/Navbar";
 import { Sidebar } from "../components/Sidebar";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Heading } from '../components/Heading';
 import { SubHeading } from '../components/SubHeading';
 import { Topbar } from '../components/Topbar.jsx';
+import axios from 'axios'
 // import { useNavigate } from 'react-router-dom';
 // import { Chessboard } from '../components/Chessboard';
 
 
 
 export const Landing = () => {
-
+    const [username, setUsername] = useState("Player");
+    const [rating, setRating] = useState(1200);
 
     const navigate = useNavigate();
     // const socket = useSocketContext();
-
     useEffect(() => {
-
         if (!localStorage.getItem("token")) {
             navigate("/signin");
+        } else {
+            getUserData();
         }
     }, [navigate]);
+
+    const getUserData = async () => {
+        try {
+            const response = await axios.get('http://localhost:3000/userinfo', {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            });
+
+            const { username, rating } = response.data.data;
+
+            setUsername(username);
+            setRating(rating);
+       
+        } catch (error) {
+            console.error("Error fetching user data:", error);
+        }
+    };
 
     const initGame = () => {
 
@@ -47,7 +67,7 @@ export const Landing = () => {
                             </div>
 
                         </div>
-                        <Topbar />
+                        <Topbar username={username} rating={rating} />
 
                     </div>
 
