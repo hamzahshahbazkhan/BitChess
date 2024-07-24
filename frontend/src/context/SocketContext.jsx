@@ -1,7 +1,6 @@
-import { createContext, useContext } from 'react';
+import React, { createContext, useContext } from 'react';
 
-
-const SocketContext = createContext(null)
+const SocketContext = createContext(null);
 
 export const useSocketContext = () => {
     return useContext(SocketContext);
@@ -9,8 +8,8 @@ export const useSocketContext = () => {
 
 export const SocketProvider = ({ children, socket }) => {
     return (
-        <SocketContext.Provider value={socket} >
+        <SocketContext.Provider value={socket}>
             {children}
         </SocketContext.Provider>
-    )
-}
+    );
+};
