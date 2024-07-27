@@ -307,7 +307,7 @@ export const Game = () => {
                         }
                         {/* <Timer m={time.m} s={time.s} ms={time.ms} /> */}
                     </div>
-                    <Player username={username} rating={rating} winner={winner} color={color} player='p' isGameOver={isGameOver} />
+                    <Player username={username} rating={rating} winner={winner} color={color} player='p' isGameOver={isGameOver} socket={socket}/>
 
                 </div>
 
@@ -321,7 +321,7 @@ export const Game = () => {
                     ) : isGameOver ? (
                         <div>
                             <Heading label={`${winner} ${winner=='draw'?"":"won"}`}/>
-                            <Timer m={oppTime.m} s={oppTime.s} ms={oppTime.ms} moveCount={moveCount} color={oppColor} started={timerStart} />
+                            <Timer m={oppTime.m} s={oppTime.s} ms={oppTime.ms} moveCount={moveCount} color={oppColor} started={timerStart} socket={socket}/>
 
                             <div className="max-w-full w-44 h-80 max-h-80 overflow-auto bg-zinc-700 shadow-inner shadow-zinc-950 text-amber-50 text-opacity-80 p-4 rounded-lg mt-4 mb-4 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-200">
 
@@ -339,7 +339,7 @@ export const Game = () => {
                         </div>
                     ) : (
                         <div>
-                            <Timer m={oppTime.m} s={oppTime.s} ms={oppTime.ms} moveCount={moveCount} color={oppColor} started={timerStart} />
+                            <Timer m={oppTime.m} s={oppTime.s} ms={oppTime.ms} moveCount={moveCount} color={oppColor} started={timerStart} socket={socket} />
 
                             <div className="max-w-full w-44 h-80 max-h-80 overflow-auto bg-zinc-700 shadow-inner shadow-zinc-950 text-amber-50 text-opacity-80 p-4 rounded-lg mt-4 mb-4  scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-200">
                                 <pre className="whitespace-pre-wrap">
@@ -349,7 +349,7 @@ export const Game = () => {
                                     {chess.pgn()}
                                 </pre>
                             </div>
-                            <Timer m={time.m} s={time.s} ms={time.ms} moveCount={moveCount} color={color} started={timerStart} />
+                            <Timer m={time.m} s={time.s} ms={time.ms} moveCount={moveCount} color={color} started={timerStart} socket={socket} />
                             <div className='flex flex-col'>
                             {drawReq ? <Button label='Accept Draw' onClick={acceptDraw} /> : drawOffered?<Button label='Draw Offered'/> :<Button label='Offer Draw' onClick={draw} />}
                                 

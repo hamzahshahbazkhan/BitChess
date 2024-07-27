@@ -93,6 +93,34 @@ class Game {
                 this.oppTimer.start();
             }
 
+            console.log("i game started");
+            if (this.gameActive) {
+                this.timer.checkTimeUp(() => {
+                    let winner
+                    if (this.player2Color == 'w') {
+                        winner = 'white';
+                    } else {
+                        winner = 'black';
+                    }
+                    this.endGame(winner);
+                    socket.disconnect();
+                    return;
+                });
+                this.oppTimer.checkTimeUp(() => {
+                    let winner
+                    if (this.player1Color == 'w') {
+                        winner = 'white';
+                    } else {
+                        winner = 'black';
+                    }
+                    this.endGame(winner);
+                    socket.disconnect();
+                    return;
+                });
+            }
+
+
+
 
             if (this.chess.isGameOver()) {
                 this.endGame(winner);
@@ -108,7 +136,7 @@ class Game {
         const opponentSocket = (this.player1 === socket) ? this.player2 : this.player1;
         opponentSocket.emit("message", JSON.stringify({
             type: DRAW,
-            payload: { draw:"drawOffered" },
+            payload: { draw: "drawOffered" },
             moveCount: this.moveCount
         }))
     }
@@ -212,7 +240,7 @@ class Game {
 
     async endGame(winner) {
         this.winner = winner;
-        this.gameActive = false;
+        this.gameActive = false
 
         this.player1.emit("message", JSON.stringify({
             type: GAME_OVER,

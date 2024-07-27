@@ -1,28 +1,34 @@
 import React, { useState, useEffect } from 'react';
 
-export const Timer = ({ m, s, ms, moveCount, color, started }) => {
+export const Timer = ({ m, s, ms, moveCount, color, started, socket }) => {
     const [minute, setMinute] = useState(m);
     const [second, setSecond] = useState(s);
     const [millisecond, setMillisecond] = useState(ms);
     const [start, setStart] = useState(false);
+    // console.log(socket)
 
-    // Reset the timer values whenever the props change
     useEffect(() => {
         setMinute(m);
         setSecond(s);
         setMillisecond(ms);
     }, [m, s, ms]);
 
-    // Determine whether to start the timer based on moveCount and color
+
     useEffect(() => {
+
+        // if ((minute == 0 && second == 0 && millisecond == 0) && ((moveCount % 2 === 0 && color === 'w') || (moveCount % 2 !== 0 && color === 'b'))) {
+        //     socket.emit("message", {
+        //         type: "resign"
+        //     });
+        // }
         if ((moveCount % 2 === 0 && color === 'w') || (moveCount % 2 !== 0 && color === 'b')) {
             setStart(true);
         } else {
             setStart(false);
         }
-    }, [moveCount, color]);
 
-    // Timer countdown logic
+    }, [moveCount, color, socket]);
+
     useEffect(() => {
         let interval;
 
