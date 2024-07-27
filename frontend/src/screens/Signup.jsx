@@ -50,6 +50,10 @@ export const Signup = () => {
             console.error("Signup error:", error);
         }
     };
+    const handleClick = (event) => {
+        event.preventDefault();
+        navigate('/signin');
+    };
 
     return (
         <div className='flex'>
@@ -114,7 +118,7 @@ export const Signup = () => {
                             <div>
                                 Already have an account?
                             </div>
-                            <a href="/Signin" className='ml-2 text-emerald-400 hover:underline'>Signin</a>
+                            <a href="/Signin" onClick={handleClick} className='ml-2 text-emerald-400 hover:underline'>Signin</a>
                         </div>
                     </div>
                 </div>
