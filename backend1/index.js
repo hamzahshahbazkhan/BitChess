@@ -9,7 +9,8 @@ const { PrismaClient } = require('@prisma/client')
 const cors = require('cors');
 const z = require('zod');
 const { authMiddleware } = require('./middleware');
-const { JWT_SECRET } = require('./config');
+require('dotenv').config();
+const JWT_SECRET = process.env.JWT_SECRET;
 
 
 const prisma = new PrismaClient();

@@ -1,4 +1,7 @@
-const {JWT_SECRET}= require("./config")
+// const {JWT_SECRET}= require("./config")
+require('dotenv').config();
+const JWT_SECRET = process.env.JWT_SECRET;
+
 const jwt = require('jsonwebtoken')
 const findUsername=(socket)=>{
     const token = socket.handshake.headers['authorization'].split(' ')[1]
