@@ -40,7 +40,7 @@ export const Landing = () => {
 
             setUsername(username);
             setRating(rating);
-       
+
         } catch (error) {
             console.error("Error fetching user data:", error);
         }
@@ -63,7 +63,7 @@ export const Landing = () => {
                         <div className='flex-3 justify-center items-center  bg-slate-700 rounded-lg'>
 
                             <div className='max-w-lg mt-16'>
-                                <img src="../public/BOARD.png" alt="BOARD" />
+                                <img src="/BOARD.png" alt="BOARD" />
                             </div>
 
                         </div>

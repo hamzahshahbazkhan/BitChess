@@ -71,7 +71,7 @@ export const Signup = () => {
 
                 <div className='flex justify-center items-center'>
                     <div className='flex justify-center items-center w-[70vh] h-[70vh] mr-7 rounded-lg'>
-                        <img src="../public/BOARD.png" alt="BOARD" className='w-full h-full object-cover' />
+                        <img src="/BOARD.png" alt="BOARD" className='w-full h-full object-cover' />
                     </div>
                     <div className='flex-3 flex-col items-center bg-zinc-800 pb-4 pt-0 p-8 text-amber-50 text-lg font-normal rounded-lg shadow-inner shadow-zinc-950'>
                         <Heading label="Sign Up" />

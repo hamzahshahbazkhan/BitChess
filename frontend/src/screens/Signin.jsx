@@ -65,7 +65,7 @@ export const Signin = () => {
 
                 <div className='flex justify-center items-center'>
                     <div className='flex justify-center items-center w-[70vh] h-[70vh] mr-7 rounded-lg'>
-                        <img src="../public/BOARD.png" alt="BOARD" />
+                        <img src="/BOARD.png" alt="BOARD" />
                     </div>
                     <div className='flex-3 flex-col items-center bg-zinc-800 pb-4 p-8 text-amber-50 text-lg font-normal rounded-lg shadow-inner shadow-zinc-950'>
                         <Heading label="Sign In" />

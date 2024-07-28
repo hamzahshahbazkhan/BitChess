@@ -17,7 +17,7 @@ export const Profile = () => {
         gamesLostAsBlack: 0,
         totalGamesPlayed: 0,
         totalGamesWon: 0,
-        totalGamesLost:0
+        totalGamesLost: 0
     });
 
     const navigate = useNavigate();
@@ -41,11 +41,11 @@ export const Profile = () => {
 
             const { username, rating, gamesDrewAsWhite, gamesDrewAsBlack, gamesWonAsWhite, gamesLostAsWhite, gamesWonAsBlack, gamesLostAsBlack } = response.data.data;
             const totalGamesDrew = gamesDrewAsBlack + gamesDrewAsWhite
-            const gamesPlayedAsBlack = gamesWonAsBlack + gamesLostAsBlack+ gamesDrewAsBlack 
-            const gamesPlayedAsWhite = gamesWonAsWhite + gamesLostAsWhite+ gamesDrewAsWhite 
+            const gamesPlayedAsBlack = gamesWonAsBlack + gamesLostAsBlack + gamesDrewAsBlack
+            const gamesPlayedAsWhite = gamesWonAsWhite + gamesLostAsWhite + gamesDrewAsWhite
             const totalGamesWon = gamesWonAsBlack + gamesWonAsWhite;
             const totalGamesLost = gamesLostAsWhite + gamesLostAsBlack;
-            const totalGamesPlayed = gamesPlayedAsWhite + gamesPlayedAsBlack 
+            const totalGamesPlayed = gamesPlayedAsWhite + gamesPlayedAsBlack
 
             setUserStats({
                 username,
@@ -74,7 +74,7 @@ export const Profile = () => {
                         <div className='flex flex-col justify-center items-center w-2/5 bg-transparent text-amber-50 rounded-lg'>
                             <div className='flex flex-col justify-center items-center text-lg font bg-transparent text-amber-50 rounded-lg p-0'>
                                 <div className='pt-0 p-4 rounded-lg shadow-inner shadow-zinc-950'>
-                                    <p className='text-3xl  font-bold p-4 ' > STATISTICS</p> 
+                                    <p className='text-3xl  font-bold p-4 ' > STATISTICS</p>
                                     <div className='space-y-2'>
                                         <div className='flex'>
                                             <div className='text-lg w-48 shadow-inner shadow-zinc-900 p-2'>Username</div>
@@ -127,7 +127,7 @@ export const Profile = () => {
                         <div>
                             <div className='flex-3 justify-center items-center bg-slate-700 rounded-lg'>
                                 <div className='max-w-lg mt-16'>
-                                    <img src="../public/BOARD.png" alt="BOARD" />
+                                    <img src="/BOARD.png" alt="BOARD" />
                                 </div>
                             </div>
                         </div>
