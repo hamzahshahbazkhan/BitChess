@@ -224,7 +224,7 @@ io.on("connection", (socket) => {
     })
 });
 
-httpServer.listen(3000, '0.0.0.0', () => {
+httpServer.listen(process.env.PORT, '0.0.0.0', () => {
     //console.log("listening on 3000");
 });
 
