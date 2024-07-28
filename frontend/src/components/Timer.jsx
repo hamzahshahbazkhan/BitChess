@@ -5,7 +5,7 @@ export const Timer = ({ m, s, ms, moveCount, color, started, socket }) => {
     const [second, setSecond] = useState(s);
     const [millisecond, setMillisecond] = useState(ms);
     const [start, setStart] = useState(false);
-    // console.log(socket)
+    // //console.log(socket)
 
     useEffect(() => {
         setMinute(m);

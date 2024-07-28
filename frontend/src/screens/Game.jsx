@@ -18,12 +18,12 @@ export const RESIGN = "resign"
 export const ERROR = "error"
 export const TIMER = "timer"
 export const DRAW = "draw"
-export const DRAW_ACC="drawAcc"
+export const DRAW_ACC = "drawAcc"
 
 export const Game = () => {
     const navigate = useNavigate();
-    const socket = useSocket();
-    console.log(socket)
+    const [socket, setSocket, connectSocket] = useSocket();
+    //console.log(socket)
     const [chess, setChess] = useState(new Chess());
     const [board, setBoard] = useState(chess.board());
     const [started, setStarted] = useState(false);
@@ -46,8 +46,9 @@ export const Game = () => {
     const [checkSquares, setCheckSquares] = useState('')
     const [drawReq, setDrawReq] = useState(false)
     const [drawOffered, setDrawOffered] = useState(false);
-    console.log(time)
-    console.log(oppTime)
+    // const [onceMore, setOnceMore] = useState(0)
+    //console.log(time)
+    //console.log(oppTime)
 
     useEffect(() => {
         if (!localStorage.getItem("token")) {
@@ -57,7 +58,7 @@ export const Game = () => {
 
     useEffect(() => {
         if (!socket) {
-            console.log("no socket")
+            //console.log("no socket")
             return;
         }
 
@@ -65,7 +66,7 @@ export const Game = () => {
             socket.emit("message", {
                 type: "init_game",
             });
-            console.log("hello")
+            //console.log("hello")
         } catch (error) {
             console.error('Error emitting "init_game" message:', error);
         }
@@ -94,17 +95,17 @@ export const Game = () => {
                     setRating(newData.payload.rating);
                     setOppUsername(newData.payload.oppUsername);
                     setOppRating(newData.payload.oppRating);
-                    console.log(newData)
+                    //console.log(newData)
 
 
                     if (newData.payload.color === 'w') {
                         setColor('w');
                         setOppColor('b');
-                        console.log("you are white");
+                        //console.log("you are white");
                     } else {
                         setColor('b');
                         setOppColor('w');
-                        console.log("you are black");
+                        //console.log("you are black");
                     }
                     break;
 
@@ -112,7 +113,7 @@ export const Game = () => {
                     let move = newData.payload.move;
                     setMoveCount(newData.moveCount);
                     let moves = newData.payload.moves;
-                    console.log(newData)
+                    //console.log(newData)
                     setDrawOffered(false);
 
 
@@ -133,8 +134,8 @@ export const Game = () => {
                     } catch (e) {
                         console.error('Error processing move:', e);
                     }
-                    console.log(moves);
-                    console.log(chess.pgn())
+                    //console.log(moves);
+                    //console.log(chess.pgn())
                     setBoard(chess.board());
                     break;
 
@@ -163,7 +164,7 @@ export const Game = () => {
                     break;
 
                 case ERROR:
-                    console.log("HELLO THERE")
+                    //console.log("HELLO THERE")
                     setError(true)
                     break;
                 case TIMER:
@@ -204,45 +205,88 @@ export const Game = () => {
         setDrawOffered(true)
     }
 
-    const acceptDraw=()=>{
+    const acceptDraw = () => {
         socket.emit("message", {
             type: "drawAcc"
         })
     }
 
     const playAgain = () => {
-        navigate('/game', { replace: true });
-        window.location.reload();
+        // navigate('/game', { replace: true });
+        // setOnceMore((onceMore) => { onceMore + 1 });
+        if (socket) {
+            socket.disconnect();
+
+        }
+
+        resetGameState();
+
+        const newSocket = connectSocket();
+        if (newSocket) {
+            setSocket(newSocket);
+
+        }
+
+
+        try {
+            socket.emit("message", {
+                type: "init_game",
+            });
+            //console.log("INSIDE PLAY AGAIn")
+        } catch (error) {
+            console.error('Error emitting "init_game" message:', error);
+        }
+        // window.location.reload();
     }
+
+    const resetGameState = () => {
+        const newChess = new Chess();
+        setChess(newChess);
+        setBoard(newChess.board());
+        setStarted(false);
+        setColor('w');
+        setOppColor('b');
+        setMoveCount(0);
+        setIsGameOver(false);
+        setWinner('');
+        setTime({ m: 10, s: 0o0, ms: 0 });
+        setOppTime({ m: 10, s: 0o0, ms: 0 });
+        setTimerStart(false);
+        setError(false);
+        setUsername('Player');
+        setRating(1200);
+        setOppUsername('Opponent');
+        setOppRating(1200);
+        setInCheck(false);
+        setHighlightedSquares([]);
+        setCheckSquares('');
+        setDrawReq(false);
+        setDrawOffered(false);
+    };
+
+
     const home = () => {
         navigate('/')
     }
     const formatPGN = (pgn) => {
-        // Split the string by spaces
         const words = pgn.split(' ');
 
-        // Initialize a new array to hold formatted lines
         let formattedLines = [];
         let line = '';
 
-        // Iterate over the words
         words.forEach((word, index) => {
-            // Append the word to the line
             line += (index > 0 ? ' ' : '') + word;
 
-            // If the line contains more than three words, add it to the formatted lines
             if ((index + 1) % 3 === 0) {
                 formattedLines.push(line);
                 line = '';
             }
         });
 
-        // Add any remaining text in the last line
         if (line) {
             formattedLines.push(line);
         }
 
-        // Join the formatted lines with new lines
         return formattedLines.join('\n');
     }
 
@@ -302,12 +346,12 @@ export const Game = () => {
                                         highlightedSquares={highlightedSquares}
                                         checkSquares={checkSquares}
                                         setDrawReq={setDrawReq} />
-                                
+
                                 </>
                         }
                         {/* <Timer m={time.m} s={time.s} ms={time.ms} /> */}
                     </div>
-                    <Player username={username} rating={rating} winner={winner} color={color} player='p' isGameOver={isGameOver} socket={socket}/>
+                    <Player username={username} rating={rating} winner={winner} color={color} player='p' isGameOver={isGameOver} socket={socket} />
 
                 </div>
 
@@ -320,8 +364,8 @@ export const Game = () => {
                         <p className='text-xl font-normal'>Finding an opponent....</p>
                     ) : isGameOver ? (
                         <div>
-                            <Heading label={`${winner} ${winner=='draw'?"":"won"}`}/>
-                            <Timer m={oppTime.m} s={oppTime.s} ms={oppTime.ms} moveCount={moveCount} color={oppColor} started={timerStart} socket={socket}/>
+                            <Heading label={`${winner} ${winner == 'draw' ? "" : "won"}`} />
+                            <Timer m={oppTime.m} s={oppTime.s} ms={oppTime.ms} moveCount={moveCount} color={oppColor} started={timerStart} socket={socket} />
 
                             <div className="max-w-full w-44 h-80 max-h-80 overflow-auto bg-zinc-700 shadow-inner shadow-zinc-950 text-amber-50 text-opacity-80 p-4 rounded-lg mt-4 mb-4 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-200">
 
@@ -351,8 +395,8 @@ export const Game = () => {
                             </div>
                             <Timer m={time.m} s={time.s} ms={time.ms} moveCount={moveCount} color={color} started={timerStart} socket={socket} />
                             <div className='flex flex-col'>
-                            {drawReq ? <Button label='Accept Draw' onClick={acceptDraw} /> : drawOffered?<Button label='Draw Offered'/> :<Button label='Offer Draw' onClick={draw} />}
-                                
+                                {drawReq ? <Button label='Accept Draw' onClick={acceptDraw} /> : drawOffered ? <Button label='Draw Offered' /> : <Button label='Offer Draw' onClick={draw} />}
+
                                 <Resign label='Resign' onClick={resign} className="hover:bg-red-500" />
                             </div>
 

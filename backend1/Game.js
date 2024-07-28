@@ -49,7 +49,7 @@ class Game {
             }));
             // this.timer.start();
         }).catch(err => {
-            console.log('Error initializing game:', err);
+            //console.log('Error initializing game:', err);
         });
     }
 
@@ -93,7 +93,7 @@ class Game {
                 this.oppTimer.start();
             }
 
-            console.log("i game started");
+            //console.log("i game started");
             if (this.gameActive) {
                 this.timer.checkTimeUp(() => {
                     let winner

@@ -38,7 +38,7 @@ export const Signup = () => {
         }
 
         try {
-            const response = await axios.post("http://localhost:3000/signup", {
+            const response = await axios.post("https://bit-chess-api.vercel.app/signup", {
                 username,
                 password,
                 email,

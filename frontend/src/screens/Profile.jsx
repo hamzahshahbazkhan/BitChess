@@ -32,12 +32,12 @@ export const Profile = () => {
 
     const getUserData = async () => {
         try {
-            const response = await axios.get('http://localhost:3000/userinfo', {
+            const response = await axios.get('http://bit-chess-api.vercel.app/userinfo', {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },
             });
-            console.log(response.data);
+            //console.log(response.data);
 
             const { username, rating, gamesDrewAsWhite, gamesDrewAsBlack, gamesWonAsWhite, gamesLostAsWhite, gamesWonAsBlack, gamesLostAsBlack } = response.data.data;
             const totalGamesDrew = gamesDrewAsBlack + gamesDrewAsWhite

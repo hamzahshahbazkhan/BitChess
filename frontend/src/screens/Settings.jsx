@@ -29,7 +29,7 @@ export const Settings = () => {
         }
 
         try {
-            const response = await axios.put("http://localhost:3000/updateInfo", {
+            const response = await axios.put("http://bit-chess-api.vercel.app/updateInfo", {
                 username,
                 password,
                 email,
@@ -40,7 +40,7 @@ export const Settings = () => {
                 },
             });
 
-            console.log(response);
+            //console.log(response);
             setError(""); // Clear error on successful update
             // Optionally handle success feedback to the user here
 
@@ -52,7 +52,7 @@ export const Settings = () => {
 
     const getUserData = async () => {
         try {
-            const response = await axios.get('http://localhost:3000/userinfo', {
+            const response = await axios.get('http://bit-chess-api.vercel.app/userinfo', {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },
@@ -111,9 +111,9 @@ export const Settings = () => {
                                             />
                                         </div>
                                         <div className='flex'>
-                                            <Button 
-                                                label={"Save Changes"} 
-                                                onClick={update} 
+                                            <Button
+                                                label={"Save Changes"}
+                                                onClick={update}
                                                 disabled={!password} // Disable button if password is empty
                                             />
                                         </div>

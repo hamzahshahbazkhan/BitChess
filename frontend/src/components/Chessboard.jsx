@@ -38,9 +38,9 @@ export const Chessboard = ({ chess, board, socket, setBoard, color, moveCount, s
     };
 
     useEffect(() => {
-        
-            updateCheckKingSquare();
-        
+
+        updateCheckKingSquare();
+
     }, [started, moveCount, chess]);
 
     const handleClick = (squareRep) => {
@@ -69,11 +69,11 @@ export const Chessboard = ({ chess, board, socket, setBoard, color, moveCount, s
                     setFrom(null);
                     setDrawReq(false);
                 } catch (e) {
-                    console.log(e);
+                    //console.log(e);
                     setFrom(null);
                 }
             } else {
-                console.log("not your move");
+                //console.log("not your move");
             }
         }
     };

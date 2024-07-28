@@ -15,7 +15,7 @@ class GameManager {
     }
 
     addUser(socket) {
-        console.log("User Added")
+        //console.log("User Added")
         this.users.push(socket);
         this.initSocketEvents(socket);
     }
@@ -28,33 +28,34 @@ class GameManager {
 
     }
     initSocketEvents(socket) {
-        console.log(socket.id);
+        //console.log(socket.id);
         socket.on("message", (data) => {
             const newData = (data);
             if (newData.type == INIT_GAME) {
-                //console.log("hello this is good ")
+                ////console.log("hello this is good ")
+                console.log("YEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
                 if (this.pendingUser === null) {
                     this.pendingUser = socket;
                 } else if (findUsername(socket) === findUsername(this.pendingUser)) {
-                    console.log(findUsername(socket))
-                    console.log(findUsername(this.pendingUser))
+                    //console.log(findUsername(socket))
+                    //console.log(findUsername(this.pendingUser))
                     socket.emit("message", JSON.stringify({
                         type: ERROR,
                         payload: {
                             msg: "YOU CANT PLAY AGAINST YOURSELF"
                         }
                     }));
-                    console.log("YOU caant play with yourself")
+                    //console.log("YOU caant play with yourself")
 
                 }
                 else {
                     const player1 = findUsername(socket);
                     const player2 = findUsername(this.pendingUser);
-                    console.log(socket)
-                    console.log(this.pendingUser)
+                    //console.log(socket)
+                    //console.log(this.pendingUser)
                     socket.join(this.pendingUser.id);
-                    console.log("The room is: ")
-                    console.log(this.pendingUser.id)
+                    //console.log("The room is: ")
+                    //console.log(this.pendingUser.id)
                     let room = this.pendingUser.id;
                     const game = new Game(this.pendingUser, socket, room);
                     this.games.push(game);
@@ -73,11 +74,11 @@ class GameManager {
                     this.drawaccepted = false;
                 }
                 catch (error) {
-                    console.log(error)
+                    //console.log(error)
                     return
                 }
             } else if (newData.type == GAME_OVER) {
-                console.log("Inside game over")
+                //console.log("Inside game over")
                 const game = this.games.find(game => game.player1 == socket || game.player2 == socket);
                 this.player1.leave(game.room)
                 this.player2.leave(game.room)

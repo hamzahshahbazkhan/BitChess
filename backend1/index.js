@@ -52,7 +52,7 @@ app.post('/signup', async (req, res) => {
             email: req.body.email
         }
     })
-    console.log(newUser);
+    //console.log(newUser);
     const token = jwt.sign({ username: req.body.username }, 'jwt_secret');
     res.status(201).send({
         message: "User created successfully",
@@ -78,7 +78,7 @@ app.post('/signin', async (req, res) => {
             username: username
         }
     })
-    console.log(user);
+    //console.log(user);
     if (user && await bcrypt.compare(password, user.password)) {
         const token = jwt.sign({ username: user.username }, 'jwt_secret');
         res.json({ token });
@@ -189,10 +189,10 @@ io.use((socket, next) => {
     const authHeader = socket.handshake.headers['authorization'];
     if (authHeader && authHeader.startsWith('Bearer ')) {
         const token = authHeader.split(' ')[1];
-        console.log(token);
+        //console.log(token);
         try {
             const decoded = jwt.verify(token, JWT_SECRET);
-            console.log(decoded)
+            //console.log(decoded)
             socket.userId = decoded.userId;
             next();
         } catch (e) {
@@ -208,8 +208,8 @@ io.use((socket, next) => {
 
 
 io.on("connection", (socket) => {
-    //console.log(`User connected: ${socket.id}`);
-    console.log(socket)
+    ////console.log(`User connected: ${socket.id}`);
+    //console.log(socket)
     gameManager.addUser(socket);
     socket.on("disconnect", () => {
         gameManager.removeUser(socket);
@@ -217,7 +217,7 @@ io.on("connection", (socket) => {
 });
 
 httpServer.listen(3000, () => {
-    console.log("listening on 3000");
+    //console.log("listening on 3000");
 });
 
 
@@ -289,5 +289,5 @@ httpServer.listen(3000, () => {
 // });
 
 // httpServer.listen(3000, () => {
-//     console.log("listening on 3000");
+//     //console.log("listening on 3000");
 // });
