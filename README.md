@@ -1,2 +1,1 @@
-﻿# StakeChess
-building stake chess: chess, but you can put some money on stake....
+
