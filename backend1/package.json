@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node index.js",
-    "postinstall": "prisma generate"
+    "dev": "prisma generate && node index.js"
   },
   "author": "",
   "license": "ISC",
