@@ -34,7 +34,7 @@ export const Signin = () => {
         }
 
         try {
-            const response = await axios.post("https://bit-chess-api.vercel.app/signin", {
+            const response = await axios.post("https://bitchess-za11.onrender.com/signin", {
                 username,
                 password
             });

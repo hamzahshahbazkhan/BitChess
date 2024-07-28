@@ -30,7 +30,7 @@ export const Landing = () => {
 
     const getUserData = async () => {
         try {
-            const response = await axios.get('https://bit-chess-api.vercel.app/userinfo', {
+            const response = await axios.get('https://bitchess-za11.onrender.com/userinfo', {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },
