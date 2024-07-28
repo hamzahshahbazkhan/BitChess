@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import { useNavigate } from 'react-router-dom';
 
-const SOCKET_URL = 'http://bit-chess-api.vercel.app';
+const SOCKET_URL = 'https://bit-chess-api.vercel.app';
 
 export const useSocket = () => {
     const [socket, setSocket] = useState(null);
