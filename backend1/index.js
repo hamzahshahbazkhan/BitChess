@@ -15,13 +15,12 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 const prisma = new PrismaClient();
 const app = express();
-app.use(cors(
-    {
-        origin: ["https://bit-chess.vercel.app"],
-        methods: ["POST", "PUT", "DELETE", "GET"],
-        credentials: true
-    }
-));
+app.use(cors({
+    origin: 'https://bit-chess.vercel.app', // Your client URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+}));
 app.use(bodyParser.json());
 
 const signupBody = z.object({
@@ -185,7 +184,10 @@ app.get('/userinfo', authMiddleware, async (req, res) => {
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
     cors: {
-        origin: "*"
+        origin: 'https://bit-chess.vercel.app',
+        methods: ['GET', 'POST'],
+        allowedHeaders: ['Content-Type', 'Authorization'],
+        credentials: true
     }
 });
 const gameManager = new GameManager(io);
