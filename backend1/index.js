@@ -15,7 +15,13 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 const prisma = new PrismaClient();
 const app = express();
-app.use(cors());
+app.use(cors(
+    {
+        origin: ["https://bit-chess.vercel.app"],
+        methods: ["POST", "PUT", "DELETE", "GET"],
+        credentials: true
+    }
+));
 app.use(bodyParser.json());
 
 const signupBody = z.object({
