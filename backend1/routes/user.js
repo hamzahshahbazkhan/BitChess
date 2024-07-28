@@ -3,7 +3,7 @@ const router = express.Router();
 const z = require('zod');
 const { User, Account } = require('../db');
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
+// require('dotenv').config();
 const JWT_SECRET = process.env.JWT_SECRET;
 const { authMiddleware } = require('../middleware');
 
