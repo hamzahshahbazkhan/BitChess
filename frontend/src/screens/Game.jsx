@@ -174,7 +174,7 @@ export const Game = () => {
                         setTime({ m: newData.time.minutes, s: newData.time.seconds, ms: newData.time.milliseconds });
                         setOppTime({ m: newData.oppTime.minutes, s: newData.oppTime.seconds, ms: newData.oppTime.milliseconds })
                     } else {
-                        setOppTime({ m: newData.time.minutes, s: newDaplayta.time.seconds, ms: newData.time.milliseconds });
+                        setOppTime({ m: newData.time.minutes, s: newData.time.seconds, ms: newData.time.milliseconds });
                         setTime({ m: newData.oppTime.minutes, s: newData.oppTime.seconds, ms: newData.oppTime.milliseconds })
                     }
                     break;
