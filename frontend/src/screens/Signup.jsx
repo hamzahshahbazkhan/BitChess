@@ -20,7 +20,7 @@ export const Signup = () => {
         if (localStorage.getItem("token")) {
             navigate("/");
         }
-    }, [navigate]);
+    }, [navigate, loading]);
 
     const validate = () => {
         const errors = {};
