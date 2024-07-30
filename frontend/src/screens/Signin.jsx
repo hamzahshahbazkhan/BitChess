@@ -12,6 +12,8 @@ export const Signin = () => {
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false)
+    const [isError, setIsError] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('Wrong credentials')
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -44,6 +46,7 @@ export const Signin = () => {
             navigate("/");
         } catch (error) {
             setLoading(false);
+            setIsError(true);
             console.error("Signin error:", error);
         }
     };
@@ -98,8 +101,15 @@ export const Signin = () => {
                                 <span class="sr-only">Loading...</span>
                             </div> :
                             <Button onClick={handleSubmit} label="Sign In" />
+
                         }
                         {/* <Button onClick={handleSubmit} label="Sign In" /> */}
+                        {isError ?
+                            <div className='flex mt-4 font-normal text-sm text-red-600'>
+                                <div>
+                                    {errorMessage}
+                                </div>
+                            </div> : <div></div>}
                         <div className='flex mt-4 font-normal text-sm'>
                             <div>
                                 Don't have an account?
