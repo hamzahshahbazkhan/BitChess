@@ -1,5 +1,8 @@
 name: keep-warm
 on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/keep-warm.yml', 'backend1/**']
   schedule:
     - cron: '*/10 * * * *'
   workflow_dispatch:
