@@ -16,16 +16,13 @@ export const useSocket = () => {
         }
 
         const newSocket = io(SOCKET_URL, {
-            extraHeaders: {
-                Authorization: `Bearer ${token}`
+            auth: {
+                token: token
             }
         });
 
         newSocket.on('connect_error', (err) => {
             console.error('Connection error:', err.message);
-            alert('Connection error: ' + err.message);
-            localStorage.removeItem("token");
-            navigate("/signin");
         });
 
         newSocket.on('connect', () => {

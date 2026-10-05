@@ -195,14 +195,16 @@ const gameManager = new GameManager(io);
 
 
 io.use((socket, next) => {
+    const tokenFromAuth = socket.handshake.auth?.token;
     const authHeader = socket.handshake.headers['authorization'];
-    if (authHeader && authHeader.startsWith('Bearer ')) {
-        const token = authHeader.split(' ')[1];
+    const tokenFromHeader = authHeader && authHeader.startsWith('Bearer ') ? authHeader.split(' ')[1] : null;
+    const token = tokenFromAuth || tokenFromHeader;
+    if (token) {
         //console.log(token);
         try {
             const decoded = jwt.verify(token, JWT_SECRET);
             //console.log(decoded)
-            socket.userId = decoded.userId;
+            socket.username = decoded.username;
             next();
         } catch (e) {
             console.error('JWT verification error:', e);
