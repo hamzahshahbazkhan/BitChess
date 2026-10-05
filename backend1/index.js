@@ -10,7 +10,8 @@ const cors = require('cors');
 const z = require('zod');
 const { authMiddleware } = require('./middleware');
 // require('dotenv').config();
-const JWT_SECRET = process.env.JWT_SECRET;
+require('dotenv').config();
+const JWT_SECRET = process.env.JWT_SECRET || 'jwt_secret_dev_only';
 
 
 const prisma = new PrismaClient();
@@ -33,7 +34,7 @@ const signupBody = z.object({
 app.post('/signup', async (req, res) => {
     const { success } = signupBody.safeParse(req.body);
     if (!success) {
-        res.status(411).json({
+        return res.status(411).json({
             message: "Incorrect inputs"
         })
     }
@@ -58,7 +59,7 @@ app.post('/signup', async (req, res) => {
         }
     })
     //console.log(newUser);
-    const token = jwt.sign({ username: req.body.username }, 'jwt_secret');
+    const token = jwt.sign({ username: req.body.username }, JWT_SECRET, { expiresIn: '7d' });
     res.status(201).send({
         message: "User created successfully",
         token: token
@@ -73,7 +74,7 @@ const signinBody = z.object({
 app.post('/signin', async (req, res) => {
     const { success } = signinBody.safeParse(req.body);
     if (!success) {
-        res.status(411).json({
+        return res.status(411).json({
             message: 'Invalid credentials'
         })
     }
@@ -85,7 +86,7 @@ app.post('/signin', async (req, res) => {
     })
     //console.log(user);
     if (user && await bcrypt.compare(password, user.password)) {
-        const token = jwt.sign({ username: user.username }, 'jwt_secret');
+        const token = jwt.sign({ username: user.username }, JWT_SECRET, { expiresIn: '7d' });
         res.json({ token });
     } else {
         res.status(401).send('Invalid credentials')
@@ -224,7 +225,7 @@ io.on("connection", (socket) => {
     })
 });
 
-httpServer.listen(process.env.PORT, '0.0.0.0', () => {
+httpServer.listen(process.env.PORT || 3000, '0.0.0.0', () => {
     //console.log("listening on 3000");
 });
 
