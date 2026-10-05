@@ -124,17 +124,18 @@ app.put('/updateInfo', authMiddleware, async (req, res) => {
             });
         }
 
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const data = {};
+        if (req.body.username) data.username = req.body.username;
+        if (req.body.name !== undefined && req.body.name !== "") data.name = req.body.name;
+        if (req.body.email !== undefined && req.body.email !== "") data.email = req.body.email;
+        if (req.body.password) {
+            data.password = await bcrypt.hash(req.body.password, 10);
+        }
         const response = await prisma.user.update({
             where: {
                 username: req.username,
             },
-            data: {
-                username: req.body.username,
-                password: hashedPassword,
-                name: req.body.name !== "" ? req.body.name : user.name,
-                email: req.body.email !== "" ? req.body.email : user.email
-            }
+            data: data
         })
 
         res.json({
@@ -142,9 +143,13 @@ app.put('/updateInfo', authMiddleware, async (req, res) => {
         });
     } catch (error) {
         console.error("Error while updating information:", error);
+        if (error.code === 'P2002') {
+            return res.status(409).json({
+                message: "Username or email already in use"
+            });
+        }
         res.status(500).json({
-            message: "Internal server error",
-            error: error
+            message: "Internal server error"
         });
     }
 });
@@ -167,6 +172,21 @@ app.get('/userinfo', authMiddleware, async (req, res) => {
         const data = await prisma.user.findUnique({
             where: {
                 username: req.username,
+            },
+            select: {
+                id: true,
+                username: true,
+                email: true,
+                name: true,
+                rating: true,
+                gamesWonAsWhite: true,
+                gamesLostAsWhite: true,
+                gamesDrewAsWhite: true,
+                gamesWonAsBlack: true,
+                gamesLostAsBlack: true,
+                gamesDrewAsBlack: true,
+                isPlaying: true,
+                createdAt: true
             }
         });
 
@@ -176,8 +196,7 @@ app.get('/userinfo', authMiddleware, async (req, res) => {
     } catch (error) {
         console.error("Error while updating information:", error);
         res.status(500).json({
-            message: "Internal server error",
-            error: error
+            message: "Internal server error"
         });
     }
 })
