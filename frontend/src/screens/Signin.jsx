@@ -38,6 +38,7 @@ export const Signin = () => {
 
         try {
             setLoading(true);
+            setIsError(false);
             const response = await axios.post("https://bitchess-za11.onrender.com/signin", {
                 username,
                 password
@@ -47,6 +48,7 @@ export const Signin = () => {
         } catch (error) {
             setLoading(false);
             setIsError(true);
+            setErrorMessage(error.response?.data?.message || error.response?.data || 'Wrong credentials');
             console.error("Signin error:", error);
         }
     };
@@ -108,7 +110,6 @@ export const Signin = () => {
                             <div className='flex mt-4 font-normal text-sm text-red-600'>
                                 <div>
                                     {errorMessage}
-                                    "sdflskdjfslfls"
                                 </div>
                             </div> : <div></div>}
                         <div className='flex mt-4 font-normal text-sm'>

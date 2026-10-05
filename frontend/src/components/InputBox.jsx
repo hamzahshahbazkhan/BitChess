@@ -1,9 +1,9 @@
-export const InputBox = ({ label, placeholder, value, onChange }) => {
+export const InputBox = ({ label, placeholder, value, onChange, type = "text" }) => {
     return (
         <div className="w-full mb-4 ">
             <label className="block text-amber-50 text-lg font-bold mb-2">{label}</label>
             <input
-                type="text"
+                type={type}
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
