@@ -24,6 +24,10 @@ app.use(cors({
 }));
 app.use(bodyParser.json());
 
+app.get('/health', (req, res) => {
+    res.json({ status: 'ok', uptime: process.uptime() });
+});
+
 const signupBody = z.object({
     username: z.string(),
     name: z.string(),
